@@ -1,15 +1,12 @@
 import cookieParser from "cookie-parser";
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import connectDB from "./utils/db.js";
+
+dotenv.config({});
 
 const app = express();
-
-app.get('/home', (req, res) => {
-    return res.status(200).json({
-        message: "hello world",
-        success: true
-    })
-})
 
 //middelware
 app.use(express.json());
@@ -23,8 +20,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.listen(port, () => {
+    connectDB();
     console.log(`server is running on port ${port}`);
 })
+
